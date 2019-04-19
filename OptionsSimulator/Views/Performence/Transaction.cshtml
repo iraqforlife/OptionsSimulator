@@ -10,16 +10,16 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="AddTransaction">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Open date</label>
-                <input type="datetime-local" class="form-control"/>
+                <input type="datetime-local" name="Open" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ','T')"/>
                 <span class="text-danger">Leave empty if the position is opened today</span>
             </div>
             <div class="form-group">
                 <label class="control-label">Close date</label>
-                <input type="datetime-local" class="form-control" />
+                <input type="datetime-local" name="Close" class="form-control" />
                 <span class="text-danger">Leave empty if the position is still open</span>
             </div>
             <div class="form-group">
@@ -29,8 +29,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Exit Price</label>
-                <input type="number" class="form-control" />
-                <span asp-validation-for="Exit" class="text-danger">Leave empty if the position is still open</span>
+                <input type="number" class="form-control" name="exit"/>
+                <span class="text-danger">Leave empty if the position is still open</span>
             </div>
             <div class="form-group">
                 <label asp-for="Symbol" class="control-label"></label>
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Contract Expiration date</label>
-                <input type="datetime-local" class="form-control" />
+                <input type="datetime-local" name="Expiration" class="form-control" value="@DateTime.Today.AddDays(((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Friday) + 7).ToString("yyyy-MM-dd HH:mm:ss").Replace(' ','T')"/>
                 <span class="text-danger">Leave empty if the position is closing next saturday</span>
             </div>
             <div class="form-group">

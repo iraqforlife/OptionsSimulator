@@ -14,9 +14,9 @@ namespace OptionsSimulator.Controllers
     public class PerformenceController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Account> _userManager;
 
-        public PerformenceController(ApplicationDbContext dbContext, UserManager<IdentityUser> userManager)
+        public PerformenceController(ApplicationDbContext dbContext, UserManager<Account> userManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;
@@ -42,14 +42,55 @@ namespace OptionsSimulator.Controllers
         // POST: Performence/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync(IFormCollection collection)
+        public async Task<ActionResult> AddTransaction(IFormCollection collection)
         {
             try
             {
-                var currentUser = await _userManager.GetUserAsync(User);
-                //OptionsSimulator.Models.Account account2 = _dbContext.Accounts.Include(g => g.Transactions).Where(g => g.User.Id == currentUser.Id).FirstOrDefault();
-                Transaction transaction = new Transaction();
+                Account currentUser = await _userManager.GetUserAsync(User);
+                DateTime open = DateTime.Now;
+                DateTime close = DateTime.MinValue;
 
+                if (!String.IsNullOrEmpty(collection["open"]))
+                    open = DateTime.Parse(collection["open"]);
+                if (!String.IsNullOrEmpty(collection["close"]))
+                    close = DateTime.Parse(collection["close"]);
+                
+                double exit = 0;
+                if (!String.IsNullOrEmpty(collection["exit"]))
+                    exit = Double.Parse( collection["exit"]);
+
+                double entry = 0;
+                if (!String.IsNullOrEmpty(collection["entry"]))
+                    entry = Double.Parse(collection["entry"]);
+
+                DateTime expiration = DateTime.MinValue;
+                if (!String.IsNullOrEmpty(collection["expiration"]))
+                {
+                    expiration = DateTime.Parse(collection["expiration"]);
+                }
+                string symbol = collection["Symbol"];
+                Transaction transaction = new Transaction
+                {
+                    Open = open,
+                    StrikePrice = Double.Parse(collection["StrikePrice"]),
+                    NumberOfContracts = int.Parse(collection["NumberOfContracts"]),
+                    Symbol = symbol.ToUpper(),
+                    Expiration = expiration,
+                    Exit = 0,
+                    Gains = 0,
+                    Entry = entry
+                };
+
+                if (exit > 0)
+                {
+                    transaction.Exit = exit;
+                    transaction.Gains = (exit - entry) * transaction.NumberOfContracts;
+                    if(String.IsNullOrEmpty(collection["exit"]))
+                        transaction.Close = DateTime.Now;
+                }
+
+                currentUser.AddTransaction(transaction);
+                await _dbContext.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
