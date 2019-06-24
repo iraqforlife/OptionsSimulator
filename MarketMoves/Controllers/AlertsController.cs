@@ -22,9 +22,9 @@ namespace MarketMoves.Controllers
             _userManager = userManager;
         }
         // GET: Performence
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            return View(await _dbContext.Alerts.OrderByDescending(g => g.Id).ToListAsync());
         }
 
         // GET: Performence/Details/5
@@ -39,9 +39,72 @@ namespace MarketMoves.Controllers
             return View();
         }
         // GET: Performence/Create
-        public ActionResult Alert()
+        public async Task<IActionResult> Show(int id)
+        {
+            var alert = await _dbContext.Alerts.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (alert == null)
+            {
+                return NotFound();
+            }
+
+            return View(alert);
+        }
+        // GET: Performence/Create
+        public ActionResult AddAlert()
         {
             return View();
+        }
+        // POST: Performence/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SaveAlert(IFormCollection collection)
+        {
+            try
+            {
+                String entry = collection["Entry"];
+                String profitPrice = collection["ProfitPrice"];
+                String profitTarget = collection["ProfitTarget"];
+                String lossPrice = collection["LossPrice"];
+                String lossTarget = collection["LossTarget"];
+                String title = collection["Title"];
+                String option = collection["Option"];
+                String riskReward = collection["RiskReward"];
+                String description = collection["Description"];
+                String image1Link = collection["Image1Link"];
+                String image1Description = collection["Image1Description"];
+                String image2Link = collection["Image2Link"];
+                String image2Description = collection["Image2Description"];
+                DateTime created = DateTime.Now;
+
+                Alert newAlert = new Alert()
+                {
+                    Created = created,
+                    Description = description,
+                    Entry = entry,
+                    Image1Description = image1Description,
+                    Image1Link = image1Link,
+                    Image2Description = image2Description,
+                    Image2Link = image2Link,
+                    LossPrice = lossPrice,
+                    LossTarget = lossTarget,
+                    Option = option,
+                    ProfitPrice = profitPrice,
+                    ProfitTarget = profitTarget,
+                    RiskReward = riskReward,
+                    Status = Models.Enums.AlertStatus.OnDeck,
+                    Title = title
+                };
+                _dbContext.Alerts.Add(newAlert);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+
+            return await Index();
         }
         // POST: Performence/Create
         [HttpPost]
@@ -93,7 +156,7 @@ namespace MarketMoves.Controllers
                         transaction.Close = DateTime.Now;
                 }
 
-                currentUser.AddTransaction(transaction);
+                //currentUser.AddTransaction(transaction);
                 await _dbContext.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
@@ -105,49 +168,91 @@ namespace MarketMoves.Controllers
         }
 
         // GET: Performence/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var alert = await _dbContext.Alerts.FirstOrDefaultAsync(e => e.Id == id);
+
+            if (alert == null)
+            {
+                return NotFound();
+            }
+            return View(alert);
         }
 
         // POST: Performence/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                var alert = await _dbContext.Alerts.FirstOrDefaultAsync(e => e.Id == id);
 
+                String entry = collection["Entry"];
+                String profitPrice = collection["ProfitPrice"];
+                String profitTarget = collection["ProfitTarget"];
+                String lossPrice = collection["LossPrice"];
+                String lossTarget = collection["LossTarget"];
+                String title = collection["Title"];
+                String option = collection["Option"];
+                String riskReward = collection["RiskReward"];
+                String description = collection["Description"];
+                String image1Link = collection["Image1Link"];
+                String image1Description = collection["Image1Description"];
+                String image2Link = collection["Image2Link"];
+                String image2Description = collection["Image2Description"];
+
+                alert.Description = description;
+
+                alert.Entry = entry;
+                alert.Image1Description = image1Description;
+                alert.Image1Link = image1Link;
+                alert.Image2Description = image2Description;
+                alert.Image2Link = image2Link;
+                alert.LossPrice = lossPrice;
+                alert.LossTarget = lossTarget;
+                alert.Option = option;
+                alert.ProfitPrice = profitPrice;
+                alert.ProfitTarget = profitTarget;
+                alert.RiskReward = riskReward;
+                alert.Title = title;
+
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
             }
             catch
             {
-                return View();
+                return View(id);
             }
         }
 
-        // GET: Performence/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Performence/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> ConfirmedDelete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var alert = await _dbContext.Alerts.FirstOrDefaultAsync(e => e.Id == id);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            if (alert == null)
             {
-                return View();
+                return NotFound();
             }
+
+            _dbContext.Remove(alert);
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
+        // GET: Performence/Edit/5
+        public async Task<ActionResult> Delete(int id)
+        {
+            var alert = await _dbContext.Alerts.FirstOrDefaultAsync(e => e.Id == id);
+
+            if (alert == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

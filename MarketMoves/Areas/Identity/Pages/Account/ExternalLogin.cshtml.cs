@@ -123,11 +123,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                 var user = new Models.Account
                 {
                     UserName = Input.Email,
-                    Email = Input.Email,
-                    InitialBalance = Input.Balance,
-                    Balance = Input.Balance,
-                    Cash = Input.Balance,
-                    Equity = 0
+                    Email = Input.Email
                 };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)

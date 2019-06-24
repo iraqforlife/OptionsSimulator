@@ -1,0 +1,90 @@
+﻿@model MarketMoves.Models.Alert
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<h4>Alert</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SaveAlert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Option" class="control-label"></label>
+                <input asp-for="Option" class="form-control" />
+                <span asp-validation-for="Option" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Entry" class="control-label"></label>
+                <input asp-for="Entry" class="form-control" />
+                <span asp-validation-for="Entry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfitPrice" class="control-label"></label>
+                <input asp-for="ProfitPrice" class="form-control" />
+                <span asp-validation-for="ProfitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfitTarget" class="control-label"></label>
+                <input asp-for="ProfitTarget" class="form-control" />
+                <span asp-validation-for="ProfitTarget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LossPrice" class="control-label"></label>
+                <input asp-for="LossPrice" class="form-control" />
+                <span asp-validation-for="LossPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LossTarget" class="control-label"></label>
+                <input asp-for="LossTarget" class="form-control" />
+                <span asp-validation-for="LossTarget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RiskReward" class="control-label"></label>
+                <input asp-for="RiskReward" class="form-control" />
+                <span asp-validation-for="RiskReward" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="10" cols="150"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image1Link" class="control-label"></label>
+                <input asp-for="Image1Link" class="form-control" />
+                <span asp-validation-for="Image1Link" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image1Description" class="control-label"></label>
+                <input asp-for="Image1Description" class="form-control" />
+                <span asp-validation-for="Image1Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image2Link" class="control-label"></label>
+                <input asp-for="Image2Link" class="form-control" />
+                <span asp-validation-for="Image2Link" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image2Description" class="control-label"></label>
+                <input asp-for="Image2Description" class="form-control" />
+                <span asp-validation-for="Image2Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

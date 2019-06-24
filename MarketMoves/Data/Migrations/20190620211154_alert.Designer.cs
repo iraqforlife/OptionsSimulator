@@ -4,14 +4,16 @@ using MarketMoves.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MarketMoves.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190620211154_alert")]
+    partial class alert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +28,10 @@ namespace MarketMoves.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<double>("Balance");
+
+                    b.Property<double>("Cash");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -33,6 +39,10 @@ namespace MarketMoves.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<double>("Equity");
+
+                    b.Property<double>("InitialBalance");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -90,9 +100,9 @@ namespace MarketMoves.Data.Migrations
 
                     b.Property<string>("Image1Link");
 
-                    b.Property<string>("Image2Description");
-
                     b.Property<string>("Image2Link");
+
+                    b.Property<string>("Image2escription");
 
                     b.Property<string>("LossPrice")
                         .IsRequired();
@@ -120,6 +130,40 @@ namespace MarketMoves.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Alerts");
+                });
+
+            modelBuilder.Entity("MarketMoves.Models.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccountId");
+
+                    b.Property<DateTime>("Close");
+
+                    b.Property<double>("Entry");
+
+                    b.Property<double>("Exit");
+
+                    b.Property<DateTime>("Expiration");
+
+                    b.Property<double>("Gains");
+
+                    b.Property<int>("NumberOfContracts");
+
+                    b.Property<DateTime>("Open");
+
+                    b.Property<double>("StrikePrice");
+
+                    b.Property<string>("Symbol")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -234,6 +278,13 @@ namespace MarketMoves.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("MarketMoves.Models.Transaction", b =>
+                {
+                    b.HasOne("MarketMoves.Models.Account")
+                        .WithMany("Transactions")
+                        .HasForeignKey("AccountId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

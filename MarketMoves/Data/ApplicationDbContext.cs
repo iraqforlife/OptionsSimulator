@@ -14,5 +14,7 @@ namespace MarketMoves.Data
         {
 
         }
+        public DbSet<Alert> Alerts { get; set; }
+
     }
 }
