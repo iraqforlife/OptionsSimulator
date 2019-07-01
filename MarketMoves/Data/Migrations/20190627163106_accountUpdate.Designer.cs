@@ -4,14 +4,16 @@ using MarketMoves.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MarketMoves.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190627163106_accountUpdate")]
+    partial class accountUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,8 +58,6 @@ namespace MarketMoves.Data.Migrations
 
                     b.Property<DateTime>("SuscriptionExpiration");
 
-                    b.Property<string>("TradingViewUserName");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -84,8 +84,7 @@ namespace MarketMoves.Data.Migrations
 
                     b.Property<DateTime>("Closed");
 
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd();
+                    b.Property<DateTime>("Created");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -93,18 +92,13 @@ namespace MarketMoves.Data.Migrations
                     b.Property<string>("Entry")
                         .IsRequired();
 
-                    b.Property<string>("Image1Description")
-                        .IsRequired();
+                    b.Property<string>("Image1Description");
 
-                    b.Property<string>("Image1Link")
-                        .IsRequired();
+                    b.Property<string>("Image1Link");
 
                     b.Property<string>("Image2Description");
 
                     b.Property<string>("Image2Link");
-
-                    b.Property<DateTime>("LastUpdated")
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("LossPrice")
                         .IsRequired();
@@ -200,9 +194,11 @@ namespace MarketMoves.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -233,9 +229,11 @@ namespace MarketMoves.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 

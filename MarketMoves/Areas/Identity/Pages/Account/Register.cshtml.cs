@@ -57,8 +57,8 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [Display(Name = "Account Balance")]
-            public double Balance { get; set; }
+            [Display(Name = "Tradingview Username")]
+            public string TradingViewUsername { get; set; }
 
         }
 
@@ -73,7 +73,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new Models.Account {
-                    UserName = Input.Email,
+                    TradingViewUserName = Input.Email,
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

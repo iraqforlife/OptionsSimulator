@@ -16,11 +16,4 @@
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Content Update="Views\Alerts\Index.cshtml">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>

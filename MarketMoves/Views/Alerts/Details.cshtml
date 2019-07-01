@@ -5,16 +5,18 @@
 <div class="container">
     <h1 class="text-center">@Model.Title</h1>
     <div style="padding-bottom:20px">
-        <h2 class="text-center" >Charts</h2>
+        <h2 class="text-center">Charts</h2>
         <div style="padding-top:30px">
             <h4 class="text-center">@Model.Image1Description</h4>
             <img src="@Model.Image1Link" alt="@Model.Image1Description" style="width:100%; height:auto" />
         </div>
-
-        <div>
-            <h4 class="text-center">@Model.Image2Description</h4>
-            <img src="@Model.Image2Link" alt="@Model.Image2Description" style="width:100%; height:auto" />
-        </div>
+        @if (!String.IsNullOrEmpty(Model.Image2Link))
+        {
+            <div>
+                <h4 class="text-center">@Model.Image2Description</h4>
+                <img src="@Model.Image2Link" alt="@Model.Image2Description" style="width:100%; height:auto" />
+            </div>
+        }
     </div>
 
     <div style="padding-top:30px">

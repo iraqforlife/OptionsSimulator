@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MarketMoves.Models.Account>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="container">
+    <partial name="_StatusMessage" />
+    <h1>@ViewData["Title"]</h1>
+    <div class="table-responsive">
+        <table class="table data-table">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th data-orderable="false">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            @user.Email
+                        </td>
+                        <td>
+                            @if (user.Suscribed)
+                            {
+                                <a asp-controller="Users" asp-action="Revoke" asp-route-id="@user.Id"><i style="color:red" class="fas fa-times"></i></a>
+                            }
+                            else
+                            {
+                                <a asp-controller= "Users" asp-action="Grant" asp-route-id = "@user.Id" ><i  style="color:green" class="fas fa-check"></i> </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

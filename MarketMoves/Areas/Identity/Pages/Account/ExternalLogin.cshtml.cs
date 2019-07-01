@@ -47,7 +47,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            public double Balance { get; set; }
+            public string TradingViewUserName { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -99,7 +99,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                     Input = new InputModel
                     {
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email),
-                        Balance = 0
+                        TradingViewUserName = ""
 
                     };
                 }
@@ -122,7 +122,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             {
                 var user = new Models.Account
                 {
-                    UserName = Input.Email,
+                    TradingViewUserName = Input.TradingViewUserName,
                     Email = Input.Email
                 };
                 var result = await _userManager.CreateAsync(user);

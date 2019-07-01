@@ -1,5 +1,4 @@
 ﻿@using MarketMoves.Models.Enums
-
 @model IEnumerable<MarketMoves.Models.Alert>
 @{
     ViewData["Title"] = "Alerts";
@@ -7,41 +6,12 @@
 
 <div class="container">
     <div name="header" class="">
-        <h1 class="d-inline">Alerts</h1>
-        <a class="btn btn-primary float-right" asp-area="" asp-controller="Alerts" asp-action="AddAlert">Add an alert</a>
-
-
-
+        <h1 class="d-inline">Front office UI missing. </h1>
     </div>
-    <div name="Today" class="table-responsive">
-        <h1>Today</h1>
-        <table class="table data-table table-dark text-center table-bordered">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Status</th>
-                    <th>Entry Price</th>
-                    <th>Exit</th>
-
-                </tr>
-            </thead> 
-            <tbody>
-                @foreach (Alert alert in Model)
-                {
-                <tr>
-                    <td> <a asp-controller="Alerts" asp-action="Show" asp-route-id="@alert.Id">@alert.Title</a></td>
-                    <td>@alert.Status</td>
-                    <td>@alert.Entry</td>
-                    <td>@alert.ProfitPrice : @alert.LossPrice</td>
-                    <td>
-                        <a asp-controller="Alerts" asp-action="Edit" asp-route-id="@alert.Id"><i class="fas fa-pen"></i></a>
-                        |
-                        <a asp-controller="Alerts" asp-action="Delete" asp-route-id="@alert.Id" class="icon-btn delete-btn"><i class="fas fa-trash"></i></a>
-                    </td>
-
-                </tr>
-                }
-            </tbody>
-        </table>
+    <div>
+        @foreach (Alert alert in Model)
+        {
+            <a asp-action="Details" asp-route-id="@alert.Id">@alert.Title</a>
+        }
     </div>
 </div>
