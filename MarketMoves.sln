@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketMoves", "MarketMoves\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCrusade", "..\code-crusade\CodeCrusade\CodeCrusade.csproj", "{37598260-A983-4D91-BCEB-E9A75966D009}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "episodesoft", "..\..\..\source\repos\episodesoft\episodesoft\episodesoft.csproj", "{FA7BC183-7BAB-446D-AFC5-D204D4228B6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{37598260-A983-4D91-BCEB-E9A75966D009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37598260-A983-4D91-BCEB-E9A75966D009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37598260-A983-4D91-BCEB-E9A75966D009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA7BC183-7BAB-446D-AFC5-D204D4228B6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA7BC183-7BAB-446D-AFC5-D204D4228B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA7BC183-7BAB-446D-AFC5-D204D4228B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA7BC183-7BAB-446D-AFC5-D204D4228B6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

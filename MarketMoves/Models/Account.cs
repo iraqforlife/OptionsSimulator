@@ -13,6 +13,5 @@ namespace MarketMoves.Models
         public string TradingViewUserName { get; set; }
         public bool Suscribed { get; set; }
         public DateTime SuscriptionExpiration { get; set; }
-
     }
 }

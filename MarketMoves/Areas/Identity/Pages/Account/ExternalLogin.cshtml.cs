@@ -123,7 +123,10 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                 var user = new Models.Account
                 {
                     TradingViewUserName = Input.TradingViewUserName,
-                    Email = Input.Email
+                    Email = Input.Email,
+                    UserName = Input.Email,
+                    Suscribed = false,
+                    SuscriptionExpiration = DateTime.Now.AddDays(7)
                 };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
