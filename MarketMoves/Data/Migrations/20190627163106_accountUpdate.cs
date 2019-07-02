@@ -18,6 +18,7 @@ namespace MarketMoves.Data.Migrations
                 table: "AspNetUsers",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
