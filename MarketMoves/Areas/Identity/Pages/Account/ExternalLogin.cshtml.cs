@@ -120,14 +120,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new Models.Account
-                {
-                    TradingViewUserName = Input.TradingViewUserName,
-                    Email = Input.Email,
-                    UserName = Input.Email,
-                    Suscribed = false,
-                    SuscriptionExpiration = DateTime.Now.AddDays(7)
-                };
+                var user = new Models.Account(Input.Email, Input.TradingViewUserName);
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
