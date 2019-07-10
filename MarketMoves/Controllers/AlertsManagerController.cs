@@ -131,7 +131,7 @@ namespace MarketMoves.Controllers
             return View(alert);
         }
 
-        // POST: Alerts1/Delete/5
+        // POST: Alerts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -145,6 +145,67 @@ namespace MarketMoves.Controllers
         private bool AlertExists(int id)
         {
             return _context.Alerts.Any(e => e.Id == id);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ExecuteEntry(int id, double price)
+        {
+            var alert = await _context.Alerts.FindAsync(id);
+            var message = "Zo price : " + price;
+            if (price < 0)
+            {
+                message = "Entry price must be positive or equal to 0";
+            }
+            else if (alert != null)
+            {
+                try
+                {
+                    alert.LastUpdated = DateTime.Now;
+                    alert.ExecutedEntry = price;
+                    alert.Status = Models.Enums.AlertStatus.Executed;
+                    await _context.SaveChangesAsync();
+                    message = "Pozey";
+                }
+                catch (Exception)
+                {
+                    message = "Server Crash";
+                }
+                
+            }
+            JsonResult result = new JsonResult(message);
+
+
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExecuteExit(int id, double price)
+        {
+            var alert = await _context.Alerts.FindAsync(id);
+            var message = "Zo price : " + price;
+            if (price < 0 )
+            {
+                message = "Entry price must be positive or equal to 0";
+            }
+            else if (alert != null)
+            {
+                try
+                {
+                   
+                    alert.LastUpdated = DateTime.Now;
+                    alert.ExecutedExit = price;
+                    alert.Status = Models.Enums.AlertStatus.Closed;
+                    await _context.SaveChangesAsync();
+                    message = "Pozey";
+                }
+                catch (Exception)
+                {
+                    message= "Server Crash";
+                }
+            }
+            JsonResult result = new JsonResult(message);
+
+
+            return result;
         }
     }
 }

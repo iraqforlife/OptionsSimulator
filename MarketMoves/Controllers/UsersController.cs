@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using MarketMoves.Models;
 
-namespace CodeCrusade.Controllers
+namespace MarketMoves.Controllers
 {
     [Authorize(Roles = Roles.Admin)]
     public class UsersController : Controller

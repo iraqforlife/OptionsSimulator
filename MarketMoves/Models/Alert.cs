@@ -70,9 +70,9 @@ namespace MarketMoves.Models
         public DateTime Closed { get; set; }
 
         [Display(Name = "Executed entry price ($)")]
-        double ExecutedEntry { get; set; }
+        public double ExecutedEntry { get; set; }
         [Display(Name = "Executed exit price ($)")]
-        double ExecutedExit { get; set; }
+        public double ExecutedExit { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdated { get; set; }

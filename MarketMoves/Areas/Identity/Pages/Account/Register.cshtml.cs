@@ -72,10 +72,15 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new Models.Account (Input.Email, Input.TradingViewUsername);
+                var user = new Models.Account (Input.Email, Input.TradingViewUsername)
+                {
+                    Suscribed = true
+                };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, Roles.PaidUser);
                     _logger.LogInformation("User created a new account with password.");
                     /*
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
