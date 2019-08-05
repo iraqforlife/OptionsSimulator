@@ -45,7 +45,8 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
-
+            [Phone]
+            public string PhoneNumber { get; set; }
             [Required]
             public string TradingViewUserName { get; set; }
         }
@@ -99,6 +100,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                     Input = new InputModel
                     {
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        PhoneNumber = info.Principal.FindFirstValue(ClaimTypes.MobilePhone),
                         TradingViewUserName = ""
 
                     };
@@ -122,13 +124,13 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             {
                 Models.Account user = new Models.Account(Input.Email, Input.TradingViewUserName)
                 {
-                    Suscribed = true
+                    Suscribed = false,
+                    PhoneNumber = Input.PhoneNumber
                 };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, Roles.PaidUser);
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {

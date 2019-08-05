@@ -18,7 +18,8 @@
                     <th>Title</th>
                     <th>Status</th>
                     <th>Entry Price</th>
-                    <th>Exit</th>
+                    <th>Profit target</th>
+                    <th>Loss price</th>
                     <th>Executed price</th>
                 </tr>
             </thead>
@@ -29,7 +30,8 @@
                         <td> <a asp-controller="Alerts" asp-action="Details" asp-route-id="@alert.Id">@alert.Title</a></td>
                         <td name="status">@alert.Status.GetDescription()</td>
                         <td>@alert.Entry</td>
-                        <td>@alert.ProfitPrice : @alert.LossPrice</td>
+                        <td>@alert.ProfitPrice </td>
+                        <td>@alert.LossPrice</td>
                         <td name="executedPrice">
                             @if (alert.Status == AlertStatus.Executed)
                             {

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using MarketMoves.Util;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -77,7 +77,7 @@ namespace MarketMoves.Controllers
             }
             return View(alert);
         }
-
+        
         // POST: Alerts1/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -202,10 +202,34 @@ namespace MarketMoves.Controllers
                     message= "Server Crash";
                 }
             }
-            JsonResult result = new JsonResult(message);
-
-
-            return result;
+            return Json(message);
         }
+
+        #region notification
+        public IActionResult SendSMS(string subject, string body, bool sms, bool mail)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(body) || (!mail && !sms))
+                    return Json(false);
+
+                NotificationManager notif = new NotificationManager(_userManager);
+
+                if (sms)
+                {
+                   // notif.SendSMS(body);
+                }
+                if (mail)
+                {
+                    notif.SendMail(subject,body);
+                }
+                return Json(true);
+            }
+            catch
+            {
+                return Json(false);
+            }
+        }
+        #endregion
     }
 }

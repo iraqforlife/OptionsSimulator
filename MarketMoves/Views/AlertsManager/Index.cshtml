@@ -9,6 +9,7 @@
     <div name="header" class="">
         <h1 class="d-inline">Alerts</h1>
         <a class="btn btn-primary float-right" asp-action="Create">Add an alert</a>
+        <button id="CustomNotification" data-toggle="modal" data-target="#CustomNotificationModal" class="btn btn-secondary float-right">Notify</button>
     </div>
     <div name="Today" class="table-responsive">
         <h1>Today</h1>
@@ -18,7 +19,8 @@
                     <th>Title</th>
                     <th>Status</th>
                     <th>Entry Price</th>
-                    <th>Exit</th>
+                    <th>Profit target</th>
+                    <th>Loss price</th>
                     <th>Executed price</th>
                     <th>Actions</th>
                 </tr>
@@ -30,7 +32,8 @@
                     <td> <a asp-controller="Alerts" asp-action="Details" asp-route-id="@alert.Id">@alert.Title</a></td>
                     <td name="status">@alert.Status.GetDescription()</td>
                     <td>@alert.Entry</td>
-                    <td>@alert.ProfitPrice : @alert.LossPrice</td>
+                    <td>@alert.ProfitPrice </td>
+                    <td>@alert.LossPrice</td>
                     <td name="executedPrice">
                         @if (alert.Status == AlertStatus.Executed)
                         {
@@ -107,6 +110,38 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="CustomNotificationModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Entry Execution</h4>
+            </div>
+                <div class="modal-body">
+                    <input type="hidden" name="AlertId" value="" />
+                    <label for="subject">Subject: </label>
+                    <input type="text" id="subject" value="" class="form-control" />
+                    <br />
+                    <div class="form-group">
+                        <label for="mail">Send Email? </label>
+                        <input type="checkbox" id="mail" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="sms">Send SMS? </label>
+                        <input type="checkbox" id="sms" class="form-control" />
+                    </div>
+
+                    <br />
+                    <label for="body">Body: </label>
+                    <textarea id="body" class="form-control"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="CustomNotificationConfirmation" >Send</button>
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+        </div>
+    </div>
+</div>
 @section Scripts
     {
     <script>
@@ -131,10 +166,8 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/AlertsManager/ExecuteEntry/" + id + "?price=" + price,
+                    url: "@Url.Action("ExecuteEntry")",
                     data: dataValue,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
                     },
@@ -168,10 +201,8 @@
             if (!isNaN(price) && price >= 0) {
                 $.ajax({
                     type: "POST",
-                    url: "/AlertsManager/ExecuteExit/" + id + "?price=" + price,
+                    url: "@Url.Action("ExecuteExit")",
                     data: dataValue,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
                     },
@@ -191,6 +222,36 @@
             else {
                 alert("Please enter a positive number");
             }
+        });
+        $("#CustomNotificationConfirmation").click(function () {
+            var subject = $("#subject").val();
+            var body = $("#body").val();
+            var sms = $("#sms").is(":checked");
+            var mail = $("#mail").is(":checked");
+            var data = {
+                "body": body,
+                "subject": subject,
+                "sms": sms,
+                "mail": mail
+            };
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SendSMS")",
+                data: data,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                },
+                success: function (result) {
+                    if (result) {
+                            
+                        alert("Alert is sent.");
+                        $('#CustomNotificationModal').modal('hide');
+                    }
+                    else {
+                        alert("Alert is not sent.")
+                    }
+                }
+            });
         });
     </script>
 }
