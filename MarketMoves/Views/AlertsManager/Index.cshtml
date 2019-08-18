@@ -50,15 +50,10 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@alert.Id" data-toggle="tooltip" title="Edit trade" style="color: turquoise;"><i class="fas fa-pen"></i></a>
                         |
-                        @if (alert.Status == AlertStatus.OnDeck)
-                        {
-                            <i name="entry" data-toggle="modal" data-target="#EntryModal" data-id="@alert.Id" style="color:turquoise;cursor: pointer;" class="fas fa-sign-in-alt"></i>
-
-                        }
-                        else if (alert.Status == AlertStatus.Executed)
-                        {
-                            <i name="exit" data-toggle="modal" data-target="#ExitModal" data-id="@alert.Id" style="color: turquoise;cursor: pointer;" class="fas fa-sign-out-alt"></i>
-                        }
+                        <!--execute-->
+                        <i name="entry" data-toggle="modal" data-target="#EntryModal" data-id="@alert.Id" style="color:turquoise;cursor: pointer;@(alert.Status == AlertStatus.OnDeck?"":"display:none;")" class="fas fa-sign-in-alt"></i>
+                        <i name="exit" data-toggle="modal" data-target="#ExitModal" data-id="@alert.Id" style="color: turquoise;cursor: pointer;@(alert.Status == AlertStatus.Executed?"":"display:none;")" class="fas fa-sign-out-alt"></i>
+                        <!--trigger-->                        
                         <i name="untriggered" data-toggle="tooltip" title="Untrigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer;@(alert.Status == AlertStatus.Triggered ? "":"display:none;")" class="fas fa-fire-extinguisher"></i>
                         <i name="triggered" data-toggle="tooltip" title="Trigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer; @(alert.Status != AlertStatus.OnDeck ? "display:none;":"")" class="fas fa-fire"></i>
                         |
@@ -176,13 +171,11 @@
                     success: function (result) {
                         if (result == "Pozey") {
                             var tr = $("tbody").find("tr[data-id='" + id + "']");
-                            var statusTd = tr.find("td[name=status]").html("Executed");
-                            var priceP = tr.find("td[name=executedPrice] p").html(price);
-                            tr.find("[name=entry]").replaceWith("<i name='exit' data-toggle='modal' data-target='#ExitModal' data-id='" + id + "' style='color: turquoise;cursor: pointer;' class='fas fa-sign-out-alt'></i>");
-                            tr.find("[name=exit]").click(function () {
-                                var id = $(this).data("id");
-                                $("#AlertId").val(id);
-                            });
+                            tr.find("td[name=status]").html("Executed");
+                            tr.find("td[name=executedPrice] p").html(price);
+                            tr.find("[name=entry]").hide();
+                            tr.find("[name=triggered]").hide();
+                            tr.find("[name=exit]").show();
                         }
                         else {
                             alert(result)
@@ -213,7 +206,7 @@
                             var tr = $("tbody").find("tr[data-id='" + id + "']");
                             tr.find("td[name=status]").html("Closed");
                             tr.find("td[name=executedPrice] p").html(price);
-                            tr.find("[name=exit]").remove();
+                            tr.find("[name=exit]").hide();
                         }
                         else {
                             alert(result)
@@ -255,7 +248,6 @@
                 }
             });
         });
-        bindTriggerEvent = function () {
         $("[name=triggered]").click(function () {
             var id = $(this).data("id");
             var data = {
@@ -275,6 +267,7 @@
                         tr.find("td[name=status]").html("Triggered");
                         tr.find("[name=untriggered]").show();
                         tr.find("[name=triggered]").hide();
+                        tr.find("[name=entry]").hide();
                         alert("Alert Triggered.");
                     }
                     else {
@@ -302,6 +295,7 @@
                         tr.find("td[name=status]").html("On Deck");
                         tr.find("[name=triggered]").show();
                         tr.find("[name=untriggered]").hide();
+                        tr.find("[name=entry]").show();
                         alert("Alert on deck.");
                     }
                     else {
@@ -311,7 +305,5 @@
             });
         });
 
-        }
-        bindTriggerEvent();
     </script>
 }
