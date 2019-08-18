@@ -53,13 +53,14 @@
                         @if (alert.Status == AlertStatus.OnDeck)
                         {
                             <i name="entry" data-toggle="modal" data-target="#EntryModal" data-id="@alert.Id" style="color:turquoise;cursor: pointer;" class="fas fa-sign-in-alt"></i>
-                            <i name="triggered" data-toggle="tooltip" title="Trigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer;" class="fas fa-fire"></i>
 
                         }
-                        else if (alert.Status == AlertStatus.Executed || alert.Status == AlertStatus.Triggered)
+                        else if (alert.Status == AlertStatus.Executed)
                         {
                             <i name="exit" data-toggle="modal" data-target="#ExitModal" data-id="@alert.Id" style="color: turquoise;cursor: pointer;" class="fas fa-sign-out-alt"></i>
                         }
+                        <i name="untriggered" data-toggle="tooltip" title="Untrigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer;@(alert.Status == AlertStatus.Triggered ? "":"display:none;")" class="fas fa-fire-extinguisher"></i>
+                        <i name="triggered" data-toggle="tooltip" title="Trigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer; @(alert.Status != AlertStatus.OnDeck ? "display:none;":"")" class="fas fa-fire"></i>
                         |
                         <a asp-action="Delete" asp-route-id="@alert.Id" asp-route-price="6" data-toggle="tooltip" title="Delete trade" style="color: turquoise;"><i alt="Delete trade" class="fas fa-trash"></i></a>
                     </td>
@@ -254,6 +255,7 @@
                 }
             });
         });
+        bindTriggerEvent = function () {
         $("[name=triggered]").click(function () {
             var id = $(this).data("id");
             var data = {
@@ -271,6 +273,8 @@
                     if (result) {
                         var tr = $("tbody").find("tr[data-id='" + this.id + "']");
                         tr.find("td[name=status]").html("Triggered");
+                        tr.find("[name=untriggered]").show();
+                        tr.find("[name=triggered]").hide();
                         alert("Alert Triggered.");
                     }
                     else {
@@ -279,5 +283,35 @@
                 }
             });
         });
+        $("[name=untriggered]").click(function () {
+            var id = $(this).data("id");
+            var data = {
+                "id": id,
+            };
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Untrigger")",
+                data: data,
+                context: { "id": id },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                },
+                success: function (result) {
+                    if (result) {
+                        var tr = $("tbody").find("tr[data-id='" + this.id + "']");
+                        tr.find("td[name=status]").html("On Deck");
+                        tr.find("[name=triggered]").show();
+                        tr.find("[name=untriggered]").hide();
+                        alert("Alert on deck.");
+                    }
+                    else {
+                        alert(result)
+                    }
+                }
+            });
+        });
+
+        }
+        bindTriggerEvent();
     </script>
 }

@@ -226,6 +226,28 @@ namespace MarketMoves.Controllers
             }
             return Json(message);
         }
+        [HttpPost]
+        public async Task<IActionResult> Untrigger(int id)
+        {
+            var alert = await _context.Alerts.FindAsync(id);
+            var message = "Zo ";
+            if (alert != null)
+            {
+                try
+                {
+
+                    alert.LastUpdated = DateTime.Now;
+                    alert.Status = Models.Enums.AlertStatus.OnDeck;
+                    await _context.SaveChangesAsync();
+                    message = "Pozey";
+                }
+                catch (Exception)
+                {
+                    message = "Server Crash";
+                }
+            }
+            return Json(message);
+        }
         #region notification
         public IActionResult SendSMS(string subject, string body, bool sms, bool mail)
         {
