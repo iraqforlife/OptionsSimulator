@@ -204,7 +204,28 @@ namespace MarketMoves.Controllers
             }
             return Json(message);
         }
+        [HttpPost]
+        public async Task<IActionResult> Trigger(int id)
+        {
+            var alert = await _context.Alerts.FindAsync(id);
+            var message = "Zo " ;
+            if (alert != null)
+            {
+                try
+                {
 
+                    alert.LastUpdated = DateTime.Now;
+                    alert.Status = Models.Enums.AlertStatus.Triggered;
+                    await _context.SaveChangesAsync();
+                    message = "Pozey";
+                }
+                catch (Exception)
+                {
+                    message = "Server Crash";
+                }
+            }
+            return Json(message);
+        }
         #region notification
         public IActionResult SendSMS(string subject, string body, bool sms, bool mail)
         {
@@ -214,16 +235,16 @@ namespace MarketMoves.Controllers
                     return Json(false);
 
                 NotificationManager notif = new NotificationManager(_userManager);
-
+                bool sent = false;
                 if (sms)
                 {
-                   // notif.SendSMS(body);
+                    sent = notif.SendSMS(body);
                 }
-                if (mail)
+                /*if (mail)
                 {
                     notif.SendMail(subject,body);
-                }
-                return Json(true);
+                }*/
+                return Json(sent);
             }
             catch
             {

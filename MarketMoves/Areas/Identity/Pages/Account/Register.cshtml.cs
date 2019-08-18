@@ -56,10 +56,26 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
+            [Phone]
+            [DataType(DataType.PhoneNumber)]
+            [RegularExpression("^[0-9]*$",ErrorMessage ="Phone numer must be numbers only and match: 5415486675")]
+            [StringLength(10, MinimumLength =10)]
+            [MaxLength(10)]
+            [MinLength(10)]
+            [Display(Name = "Phone number")]
+            public string PhoneNumber { get; set; }
+
             [Display(Name = "Tradingview Username")]
             public string TradingViewUsername { get; set; }
 
+            public static Models.Account CreateAccount(InputModel input)
+            {
+                return new Models.Account(input.Email, input.TradingViewUsername)
+                {
+                    Suscribed = false,
+                    PhoneNumber = input.PhoneNumber
+                };
+            }
         }
 
         public void OnGet(string returnUrl = null)
@@ -72,28 +88,13 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new Models.Account (Input.Email, Input.TradingViewUsername)
-                {
-                    Suscribed = true
-                };
+                var user = InputModel.CreateAccount(Input);
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, Roles.PaidUser);
                     _logger.LogInformation("User created a new account with password.");
-                    /*
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { userId = user.Id, code = code },
-                        protocol: Request.Scheme);
-                    
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);*/
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

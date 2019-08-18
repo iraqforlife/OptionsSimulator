@@ -28,7 +28,7 @@
                 {
                     <tr data-id="@alert.Id">
                         <td> <a asp-controller="Alerts" asp-action="Details" asp-route-id="@alert.Id">@alert.Title</a></td>
-                        <td name="status">@alert.Status.GetDescription()</td>
+                        <td name="status">@alert.Status</td>
                         <td>@alert.Entry</td>
                         <td>@alert.ProfitPrice </td>
                         <td>@alert.LossPrice</td>

@@ -44,16 +44,34 @@ namespace MarketMoves.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
+
             [Phone]
+            [DataType(DataType.PhoneNumber)]
+            [RegularExpression("^[0-9]*$", ErrorMessage = "Phone numer must be numbers only and match: 5415486675")]
+            [StringLength(10, MinimumLength = 10)]
+            [MaxLength(10)]
+            [MinLength(10)]
+            [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
-            [Required]
-            public string TradingViewUserName { get; set; }
+
+            [Display(Name = "Tradingview Username")]
+            public string TradingViewUsername { get; set; }
+
+            public static Models.Account CreateAccount(InputModel input)
+            {
+                return new Models.Account(input.Email, input.TradingViewUsername)
+                {
+                    Suscribed = false,
+                    PhoneNumber = input.PhoneNumber
+                };
+            }
         }
 
         public IActionResult OnGetAsync()
         {
-            return RedirectToPage("./Login");
+            return RedirectToPage("~/Alerts");
         }
 
         public IActionResult OnPost(string provider, string returnUrl = null)
@@ -101,7 +119,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                     {
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                         PhoneNumber = info.Principal.FindFirstValue(ClaimTypes.MobilePhone),
-                        TradingViewUserName = ""
+                        TradingViewUsername = ""
 
                     };
                 }
@@ -111,7 +129,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content("~/Alerts");
             // Get the information about the user from the external login provider
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
@@ -122,11 +140,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                Models.Account user = new Models.Account(Input.Email, Input.TradingViewUserName)
-                {
-                    Suscribed = false,
-                    PhoneNumber = Input.PhoneNumber
-                };
+                var user = InputModel.CreateAccount(Input);
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)

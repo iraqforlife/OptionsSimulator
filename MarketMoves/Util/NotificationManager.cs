@@ -15,11 +15,11 @@ namespace MarketMoves.Util
 {
     public class NotificationManager
     {
-        const string _AccountSid = "AC039f6db0be5ab9f247cd582a4d2c4a37";
-        const string _AuthToken = "a95f09c51e554595fc996a6659f0e190";
-        const string _Email = "tradealert.notifications@gmail.com";
-        const string _Password = "Zoisthebesttrader";
-        const string _From = "+12048085431";
+        private const string _AccountSid = "ACd19fb1303b22ffdce2e3ac4d6d57ba58";
+        private const string _AuthToken = "b42722404049c6a14a4a44d850fc851f";
+        private const string _Email = "tradealert.notifications@gmail.com";
+        private const string _Password = "Zoisthebesttrader";
+        private const string _From = "+13158885657";
         private readonly UserManager<Account> _userManager;
 
         public NotificationManager(UserManager<Account> userManager)
@@ -27,21 +27,28 @@ namespace MarketMoves.Util
             TwilioClient.Init(_AccountSid, _AuthToken);
             _userManager = userManager;
         }
-        public void SendSMS(string message)
+        public bool SendSMS(string message)
         {
             PhoneNumber from = new PhoneNumber(_From);
             PhoneNumber to ;
-
-            foreach (var user in _userManager.Users)
+            try
             {
-                if(user.Suscribed && !string.IsNullOrEmpty(user.PhoneNumber))
+                foreach (var user in _userManager.Users)
                 {
-                    to = new PhoneNumber("+1" + user.PhoneNumber);
-                    Task<MessageResource> outBoundMessage = MessageResource.CreateAsync(to: to, from:from,body:message);
+                    if (user.Suscribed && !string.IsNullOrEmpty(user.PhoneNumber))
+                    {
+                        to = new PhoneNumber("+1" + user.PhoneNumber);
+                        Task<MessageResource> outBoundMessage = MessageResource.CreateAsync(to: to, from: from, body: message);
+                    }
                 }
+                return true;
+            }
+            catch 
+            {
+                return false;
             }
         }
-        public void SendMail(string subject, string body)
+        public bool SendMail(string subject, string body)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Market Moves", _Email)); 
@@ -64,11 +71,11 @@ namespace MarketMoves.Util
                     client.Send(message);
                     client.Disconnect(true);
                 }
+                return true;
             }
-            catch (Exception ex)
+            catch 
             {
-                var www = ex.Message;
-                throw;
+                return false;
             }
         }
     }

@@ -15,6 +15,14 @@ namespace MarketMoves.Models
         public string TradingViewUserName { get; set; }
         public bool Suscribed { get; set; }
         public DateTime SuscriptionExpiration { get; set; }
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Phone numer must be numbers only and match: 5415486675")]
+        [StringLength(10, MinimumLength = 10)]
+        [MaxLength(10)]
+        [MinLength(10)]
+        [Display(Name = "Phone number")]
+        public override string PhoneNumber { get; set; }
 
         public Account(string email) : base(email)
         {            

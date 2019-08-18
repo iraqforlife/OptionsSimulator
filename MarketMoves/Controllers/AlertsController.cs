@@ -13,7 +13,7 @@ using MarketMoves.Areas.Identity;
 
 namespace MarketMoves.Controllers
 {
-    [Authorize(Policy = "PaidAccess")]
+    [Authorize(Roles = Roles.PaidUser)]
     public class AlertsController : Controller
     {
         private readonly ApplicationDbContext _context;
