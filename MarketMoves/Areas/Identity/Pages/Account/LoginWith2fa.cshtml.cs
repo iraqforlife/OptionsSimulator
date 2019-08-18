@@ -66,7 +66,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content("~/Alerts");
 
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)

@@ -13,6 +13,7 @@ namespace MarketMoves.Models.Enums
         OnDeck,
         Executed,
         Closed,
-        Triggered
+        Triggered,
+        Untriggered
     }
 }
