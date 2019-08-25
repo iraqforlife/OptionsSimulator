@@ -52,16 +52,22 @@ namespace MarketMoves.Areas.Identity.Pages.Account
             [RegularExpression("^[0-9]*$", ErrorMessage = "Phone numer must be numbers only and match: 5415486675")]
             [StringLength(10, MinimumLength = 10)]
             [MaxLength(10)]
+            [Required]
             [MinLength(10)]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
+            public bool GetNotification { get; set; }
+
             [Display(Name = "Tradingview Username")]
             public string TradingViewUsername { get; set; }
 
+            [Required]
+            public string Name { get; set; }
+
             public static Models.Account CreateAccount(InputModel input)
             {
-                return new Models.Account(input.Email, input.TradingViewUsername)
+                return new Models.Account(input.Email, input.Name, input.TradingViewUsername)
                 {
                     Suscribed = false,
                     PhoneNumber = input.PhoneNumber

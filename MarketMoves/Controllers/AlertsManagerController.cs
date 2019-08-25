@@ -42,7 +42,7 @@ namespace MarketMoves.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Entry,ProfitPrice,ProfitTarget,LossPrice,LossTarget,Title,Option,RiskReward,Description,Image1Link,Image1Description,Image2Link,Image2Description")] Alert alert)
+        public async Task<IActionResult> Create([Bind("Entry,ProfitPrice,ProfitTarget,LossPrice,LossTarget,Title,Option,OptionType,Strike,RiskReward,Description,Image1Link,Image1Description,Image2Link,Image2Description")] Alert alert)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace MarketMoves.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Entry,ProfitPrice,ProfitTarget,LossPrice,LossTarget,Title,Option,RiskReward,Description,Image1Link,Image1Description,Image2Link,Image2Description")] Alert alert)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Entry,ProfitPrice,ProfitTarget,LossPrice,LossTarget,Title,Option,OptionType,Strike,RiskReward,Description,Image1Link,Image1Description,Image2Link,Image2Description")] Alert alert)
         {
             if (id != alert.Id)
             {
@@ -237,7 +237,7 @@ namespace MarketMoves.Controllers
                 {
 
                     alert.LastUpdated = DateTime.Now;
-                    alert.Status = Models.Enums.AlertStatus.OnDeck;
+                    alert.Status = Models.Enums.AlertStatus.Untriggered;
                     await _context.SaveChangesAsync();
                     message = "Pozey";
                 }

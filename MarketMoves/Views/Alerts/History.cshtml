@@ -13,36 +13,36 @@
         <table class="table data-table table-dark text-center table-bordered">
             <thead>
                 <tr>
-                    <th>Title</th>
                     <th>Status</th>
-                    <th>Entry Price</th>
-                    <th>Profit target</th>
-                    <th>Loss price</th>
-                    <th>Executed price</th>
+                    <th>Link to Option Alert</th>
+                    <th>Option Type</th>
+                    <th>Strike</th>
+                    <th>CALLS/PUTS</th>
+                    <th>Entry price</th>
+                    <th>Exit price</th>
+                    <th>Return</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Alert alert in Model.Where(a=>a.Status==AlertStatus.Closed))
+                @foreach (Alert alert in Model.Where(a => a.Status == AlertStatus.Closed || a.Status == AlertStatus.Untriggered))
                 {
                     <tr data-id="@alert.Id">
-                        <td> <a asp-controller="Alerts" asp-action="Details" asp-route-id="@alert.Id">@alert.Title</a></td>
-                        <td name="status">@alert.Status.GetDescription()</td>
-                        <td>@alert.Entry</td>
-                        <td>@alert.ProfitPrice </td>
-                        <td>@alert.LossPrice</td>
-                        <td name="executedPrice">
-                            @if (alert.Status == AlertStatus.Executed)
-                            {
-                                <p>@alert.ExecutedEntry.ToString()</p>
 
-                            }
-                            else if (alert.Status == AlertStatus.Closed)
+                        <td name="status" style="">@alert.Status.GetDescription()</td>
+                        
+                        <td> <a asp-controller="Alerts" asp-action="Details" asp-route-id="@alert.Id">@alert.Title</a></td>
+                        <td>@alert.Option</td>
+                        <td>@alert.Strike</td>
+                        <td style="@(alert.OptionType==OptionType.Calls? "background-color:darkgreen":"background-color:darkred");">@alert.OptionType</td>
+                        <td>@alert.ExecutedEntry</td>
+                        <td>@alert.ExecutedEntry</td>
+                        <td name="executedPrice">
+                            @if (alert.Status == AlertStatus.Closed && (alert.ExecutedEntry >0 && alert.ExecutedExit>0))
                             {
-                                <p>@alert.ExecutedExit.ToString()</p>
+                                <p>@(alert.ExecutedExit - alert.ExecutedEntry)</p>
                             }
                             else
                             {
-                                <p>0</p>
                             }
                         </td>
                     </tr>

@@ -55,9 +55,7 @@
                         <i name="exit" data-toggle="modal" data-target="#ExitModal" data-id="@alert.Id" style="color: turquoise;cursor: pointer;@(alert.Status == AlertStatus.Executed?"":"display:none;")" class="fas fa-sign-out-alt"></i>
                         <!--trigger-->                        
                         <i name="untriggered" data-toggle="tooltip" title="Untrigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer;@(alert.Status == AlertStatus.Triggered ? "":"display:none;")" class="fas fa-fire-extinguisher"></i>
-                        <i name="triggered" data-toggle="tooltip" title="Trigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer; @(alert.Status != AlertStatus.OnDeck ? "display:none;":"")" class="fas fa-fire"></i>
-                        |
-                        <a asp-action="Delete" asp-route-id="@alert.Id" asp-route-price="6" data-toggle="tooltip" title="Delete trade" style="color: turquoise;"><i alt="Delete trade" class="fas fa-trash"></i></a>
+                        <i name="triggered" data-toggle="tooltip" title="Trigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer; @(alert.Status != AlertStatus.OnDeck && alert.Status != AlertStatus.Untriggered ? "display:none;":"")" class="fas fa-fire"></i>
                     </td>
                 </tr>
                 }
@@ -267,7 +265,7 @@
                         tr.find("td[name=status]").html("Triggered");
                         tr.find("[name=untriggered]").show();
                         tr.find("[name=triggered]").hide();
-                        tr.find("[name=entry]").hide();
+                        tr.find("[name=entry]").show();
                         alert("Alert Triggered.");
                     }
                     else {
@@ -292,7 +290,7 @@
                 success: function (result) {
                     if (result) {
                         var tr = $("tbody").find("tr[data-id='" + this.id + "']");
-                        tr.find("td[name=status]").html("On Deck");
+                        tr.find("td[name=status]").html("Untriggered");
                         tr.find("[name=triggered]").show();
                         tr.find("[name=untriggered]").hide();
                         tr.find("[name=entry]").show();

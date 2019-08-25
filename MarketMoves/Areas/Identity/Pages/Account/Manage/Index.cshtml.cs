@@ -45,6 +45,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account.Manage
             public string Email { get; set; }
 
             [Phone]
+            [Required]
             [DataType(DataType.PhoneNumber)]
             [RegularExpression("^[0-9]*$", ErrorMessage = "Phone numer must be numbers only and match: 5415486675")]
             [StringLength(10, MinimumLength = 10)]
@@ -52,6 +53,12 @@ namespace MarketMoves.Areas.Identity.Pages.Account.Manage
             [MinLength(10)]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Get SMS Notification")]
+            public bool GetNotification { get; set; }
+
+            [Required]
+            public string Name { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()

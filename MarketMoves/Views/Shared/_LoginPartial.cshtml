@@ -17,10 +17,9 @@
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <form id="external-account" asp-area="Identity" asp-page="/Account/ExternalLogin" asp-route-returnUrl="" method="post" class="form-horizontal">
+            <button type="submit" class="btn btn-primary" name="provider" value="Google" title="Log in">Login</button>
+        </form>
     </li>
 }
 </ul>

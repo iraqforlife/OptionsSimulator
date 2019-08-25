@@ -23,15 +23,16 @@ namespace MarketMoves.Models
         [MinLength(10)]
         [Display(Name = "Phone number")]
         public override string PhoneNumber { get; set; }
+        public string Name { get; set; }
 
-        public Account(string email) : base(email)
+        public Account(string email, string name) : base(email)
         {            
             Email = email;
             Suscribed = false;
             SuscriptionExpiration = DateTime.Now.AddDays(7);
         }
-        public Account(string email, string tradingview)
-            :this(email)
+        public Account(string email, string name, string tradingview)
+            :this(email, name)
         {
             TradingViewUserName = tradingview;
         }

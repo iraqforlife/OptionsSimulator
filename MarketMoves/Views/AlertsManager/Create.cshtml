@@ -23,6 +23,19 @@
                 <span asp-validation-for="Option" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="OptionType"  class="control-label"></label>
+                <select asp-for="OptionType">
+                    <option value="@MarketMoves.Models.Enums.OptionType.Calls">@MarketMoves.Models.Enums.OptionType.Calls</option>
+                    <option value="@MarketMoves.Models.Enums.OptionType.Puts">@MarketMoves.Models.Enums.OptionType.Puts</option>
+                </select>
+                <span asp-validation-for="OptionType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Strike" class="control-label"></label>
+                <input asp-for="Strike" class="form-control" />
+                <span asp-validation-for="Strike" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Entry" class="control-label"></label>
                 <input asp-for="Entry" class="form-control" />
                 <span asp-validation-for="Entry" class="text-danger"></span>
@@ -54,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" rows="10" cols="150"/>
+                <input asp-for="Description" class="form-control" rows="10" cols="150" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">

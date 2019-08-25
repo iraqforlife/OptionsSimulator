@@ -20,6 +20,10 @@ namespace MarketMoves.Models
         public string Title { get; set; }
         [Required(ErrorMessage ="Please enter the selected option")]
         public string Option { get; set; }
+        [Required(ErrorMessage = "Please select option type")]
+        public OptionType OptionType { get; set; }
+        [Required(ErrorMessage = "Please enter the strike price")]
+        public double Strike { get; set; } 
         [Required(ErrorMessage = "Please enter the desired entry")]
         public string Entry { get; set; }
 

@@ -4,14 +4,16 @@ using MarketMoves.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MarketMoves.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190825154050_name_toUsers")]
+    partial class name_toUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,8 +124,6 @@ namespace MarketMoves.Data.Migrations
                     b.Property<string>("Option")
                         .IsRequired();
 
-                    b.Property<int>("OptionType");
-
                     b.Property<string>("ProfitPrice")
                         .IsRequired();
 
@@ -134,8 +134,6 @@ namespace MarketMoves.Data.Migrations
                         .IsRequired();
 
                     b.Property<int>("Status");
-
-                    b.Property<double>("Strike");
 
                     b.Property<string>("Title")
                         .IsRequired();
