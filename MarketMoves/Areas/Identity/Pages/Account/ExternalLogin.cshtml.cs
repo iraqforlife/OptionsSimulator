@@ -70,6 +70,7 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                 return new Models.Account(input.Email, input.Name, input.TradingViewUsername)
                 {
                     Suscribed = false,
+                    GetSmsNotification = input.GetNotification,
                     PhoneNumber = input.PhoneNumber
                 };
             }
@@ -125,7 +126,9 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                     {
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                         PhoneNumber = info.Principal.FindFirstValue(ClaimTypes.MobilePhone),
-                        TradingViewUsername = ""
+                        TradingViewUsername = "",
+                        Name = "",
+                        GetNotification = true
 
                     };
                 }

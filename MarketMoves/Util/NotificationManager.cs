@@ -35,7 +35,7 @@ namespace MarketMoves.Util
             {
                 foreach (var user in _userManager.Users)
                 {
-                    if (user.Suscribed && !string.IsNullOrEmpty(user.PhoneNumber))
+                    if (user.Suscribed && !string.IsNullOrEmpty(user.PhoneNumber) && user.GetSmsNotification)
                     {
                         to = new PhoneNumber("+1" + user.PhoneNumber);
                         Task<MessageResource> outBoundMessage = MessageResource.CreateAsync(to: to, from: from, body: message);

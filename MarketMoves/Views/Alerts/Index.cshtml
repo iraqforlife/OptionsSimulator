@@ -46,10 +46,10 @@
                     }
                     <td> <a asp-controller="Alerts" asp-action="Details" asp-route-id="@alert.Id">@alert.Title</a></td>
                     <td>@alert.Option</td>
-                    <td>@alert.Strike</td>
+                    <td>@alert.Strike $</td>
                     <td style="@(alert.OptionType==OptionType.Calls? "background-color:darkgreen":"background-color:darkred");">@alert.OptionType</td>
-                    <td>@alert.ExecutedEntry</td>
-                    <td>@alert.ExecutedEntry</td>
+                    <td>@alert.Entry $</td>
+                    <td>@alert.ProfitPrice $</td>
                 </tr>
                 }
             </tbody>

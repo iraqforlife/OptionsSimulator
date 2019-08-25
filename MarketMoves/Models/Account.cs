@@ -23,11 +23,14 @@ namespace MarketMoves.Models
         [MinLength(10)]
         [Display(Name = "Phone number")]
         public override string PhoneNumber { get; set; }
+
         public string Name { get; set; }
+        public bool GetSmsNotification{ get; set; }
 
         public Account(string email, string name) : base(email)
         {            
             Email = email;
+            Name = name;
             Suscribed = false;
             SuscriptionExpiration = DateTime.Now.AddDays(7);
         }

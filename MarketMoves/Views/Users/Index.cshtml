@@ -11,6 +11,7 @@
         <table class="table data-table">
             <thead>
                 <tr>
+                    <th>Name</th>
                     <th>Email</th>
                     <th data-orderable="false">Actions</th>
                 </tr>
@@ -19,9 +20,8 @@
                 @foreach (var user in Model.Where(u => u.Suscribed == true))
                 {
                     <tr>
-                        <td>
-                            @user.Email
-                        </td>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
                         <td>
                             <a asp-controller="Users" asp-action="Revoke" asp-route-id="@user.Id" data-toggle="tooltip" title="Revoke access"><i style="color:red" class="fas fa-times"></i></a>
                             
@@ -36,6 +36,7 @@
         <table class="table data-table">
             <thead>
                 <tr>
+                    <th>Name</th>
                     <th>Email</th>
                     <th data-orderable="false">Actions</th>
                 </tr>
@@ -44,9 +45,8 @@
                 @foreach (var user in Model.Where(u => !u.Suscribed))
                 {
                     <tr>
-                        <td>
-                            @user.Email
-                        </td>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
                         <td>
                             <a asp-controller="Users" asp-action="Grant" asp-route-id="@user.Id" data-toggle="tooltip" title="grant access"><i style="color:green" class="fas fa-check"></i> </a>
                         </td>
