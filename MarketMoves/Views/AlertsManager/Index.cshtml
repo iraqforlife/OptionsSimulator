@@ -53,6 +53,7 @@
                         <!--execute-->
                         <i name="entry" data-toggle="modal" data-target="#EntryModal" data-id="@alert.Id" style="color:turquoise;cursor: pointer;@(alert.Status == AlertStatus.OnDeck || alert.Status==AlertStatus.Triggered?"":"display:none;")" class="fas fa-sign-in-alt"></i>
                         <i name="exit" data-toggle="modal" data-target="#ExitModal" data-id="@alert.Id" style="color: turquoise;cursor: pointer;@(alert.Status == AlertStatus.Executed?"":"display:none;")" class="fas fa-sign-out-alt"></i>
+                        |
                         <!--trigger-->                        
                         <i name="untriggered" data-toggle="tooltip" title="Untrigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer;@(alert.Status == AlertStatus.Triggered ? "":"display:none;")" class="fas fa-fire-extinguisher"></i>
                         <i name="triggered" data-toggle="tooltip" title="Trigger alert" data-id="@alert.Id" style="color:turquoise;cursor: pointer; @(alert.Status != AlertStatus.OnDeck && alert.Status != AlertStatus.Untriggered ? "display:none;":"")" class="fas fa-fire"></i>

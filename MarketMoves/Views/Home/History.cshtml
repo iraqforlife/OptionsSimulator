@@ -35,11 +35,11 @@
                         <td>@alert.Strike</td>
                         <td style="@(alert.OptionType==OptionType.Calls? "background-color:darkgreen":"background-color:darkred");">@alert.OptionType</td>
                         <td>@alert.ExecutedEntry</td>
-                        <td>@alert.ExecutedEntry</td>
+                        <td>@alert.ExecutedExit</td>
                         <td name="executedPrice">
                             @if (alert.Status == AlertStatus.Closed && (alert.ExecutedEntry >0 && alert.ExecutedExit>0))
                             {
-                                <p>@(alert.ExecutedExit - alert.ExecutedEntry)</p>
+                            <p>@(((alert.ExecutedExit - alert.ExecutedEntry) * 100 / alert.ExecutedEntry).ToString ("#.##") ) %</p>
                             }
                             else
                             {
