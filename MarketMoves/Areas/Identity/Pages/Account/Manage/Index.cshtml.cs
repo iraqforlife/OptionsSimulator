@@ -56,6 +56,11 @@ namespace MarketMoves.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Get SMS Notification")]
             public bool GetNotification { get; set; }
 
+            [Display(Name = "Tradingview Username")]
+            public string TradingViewUsername { get; set; }
+            [Display(Name = "Discord Username")]
+            public string DiscordUsername { get; set; }
+
             [Required]
             public string Name { get; set; }
         }
@@ -76,7 +81,9 @@ namespace MarketMoves.Areas.Identity.Pages.Account.Manage
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Name = user.Name,
-                GetNotification = user.GetSmsNotification
+                GetNotification = user.GetSmsNotification,
+                DiscordUsername = user.DiscordUserName,
+                TradingViewUsername = user.TradingViewUserName
             };
 
             return Page();
@@ -120,6 +127,8 @@ namespace MarketMoves.Areas.Identity.Pages.Account.Manage
             {
                 user.GetSmsNotification = Input.GetNotification;
                 user.Name= Input.Name;
+                user.DiscordUserName = Input.DiscordUsername;
+                user.TradingViewUserName = Input.TradingViewUsername;
                 await Context.SaveChangesAsync();
 
             }

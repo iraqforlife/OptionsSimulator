@@ -13,6 +13,7 @@ namespace MarketMoves.Models
     public class Account : IdentityUser
     {
         public string TradingViewUserName { get; set; }
+        public string DiscordUserName { get; set; }
         public bool Suscribed { get; set; }
         public DateTime SuscriptionExpiration { get; set; }
         [Phone]

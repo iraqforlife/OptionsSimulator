@@ -249,24 +249,16 @@ namespace MarketMoves.Controllers
             return Json(message);
         }
         #region notification
-        public IActionResult SendSMS(string subject, string body, bool sms, bool mail)
+        public IActionResult SendSMS(string message)
         {
             try
             {
-                if (string.IsNullOrEmpty(body) || (!mail && !sms))
+                if (string.IsNullOrEmpty(message))
                     return Json(false);
 
                 NotificationManager notif = new NotificationManager(_userManager);
-                bool sent = false;
-                if (sms)
-                {
-                    sent = notif.SendSMS(body);
-                }
-                /*if (mail)
-                {
-                    notif.SendMail(subject,body);
-                }*/
-                return Json(sent);
+                
+                return Json(notif.SendSMS(message));
             }
             catch
             {

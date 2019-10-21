@@ -61,6 +61,8 @@ namespace MarketMoves.Areas.Identity.Pages.Account
 
             [Display(Name = "Tradingview Username")]
             public string TradingViewUsername { get; set; }
+            [Display(Name = "Discord Username")]
+            public string DiscordUsername { get; set; }
 
             [Required]
             public string Name { get; set; }
@@ -71,7 +73,8 @@ namespace MarketMoves.Areas.Identity.Pages.Account
                 {
                     Suscribed = false,
                     GetSmsNotification = input.GetNotification,
-                    PhoneNumber = input.PhoneNumber
+                    PhoneNumber = input.PhoneNumber,
+                    DiscordUserName = input.DiscordUsername
                 };
             }
         }

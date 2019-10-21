@@ -12,6 +12,8 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>TradingView</th>
+                    <th>Discord</th>
                     <th>Email</th>
                     <th data-orderable="false">Actions</th>
                 </tr>
@@ -21,10 +23,11 @@
                 {
                     <tr>
                         <td>@user.Name</td>
+                        <td>@user.TradingViewUserName</td>
+                        <td>@user.DiscordUserName</td>
                         <td>@user.Email</td>
                         <td>
                             <a asp-controller="Users" asp-action="Revoke" asp-route-id="@user.Id" data-toggle="tooltip" title="Revoke access"><i style="color:red" class="fas fa-times"></i></a>
-                            
                         </td>
                     </tr>
                 }
@@ -37,6 +40,8 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>TradingView</th>
+                    <th>Discord</th>
                     <th>Email</th>
                     <th data-orderable="false">Actions</th>
                 </tr>
@@ -46,6 +51,8 @@
                 {
                     <tr>
                         <td>@user.Name</td>
+                        <td>@user.TradingViewUserName</td>
+                        <td>@user.DiscordUserName</td>
                         <td>@user.Email</td>
                         <td>
                             <a asp-controller="Users" asp-action="Grant" asp-route-id="@user.Id" data-toggle="tooltip" title="grant access"><i style="color:green" class="fas fa-check"></i> </a>
