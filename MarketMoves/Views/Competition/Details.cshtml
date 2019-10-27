@@ -1,0 +1,62 @@
+﻿@model MarketMoves.Models.Play
+
+@{
+    ViewData["Title"] = "View1";
+}
+
+<h1>View1</h1>
+
+<dv>
+    <h4>Play</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Profit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Profit)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Entry)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Entry)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Exit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Exit)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Why)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Why)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Execution)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Execution)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Learning)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Learning)
+        </dd>
+        @if (!String.IsNullOrEmpty(Model.Proof))
+        {
+        <dt class="col-sm-2">
+            Proof:
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.Proof" alt="@Model.Proof" style="width:100%; height:auto" />
+        </dd>
+       }
+        </dl>
+</dv>
+<div>
+    <a asp-action="UserTrades" asp-route-id="@Model.AccountId">Back to List</a>
+</div>

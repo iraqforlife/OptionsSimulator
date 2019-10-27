@@ -1,0 +1,45 @@
+﻿@model Account
+
+@{
+    ViewData["Title"] = "MyTrades";
+}
+
+<h1>MyTrades</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div>
+    <table class="table data-table table-dark text-center table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Profit</th>
+                <th>Entry</th>
+                <th>Exit</th>
+                <th>Locked</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Plays)
+            {
+                <tr>
+                    <td><a asp-action="Details" asp-route-id="@item.Id">@item.Title</a></td>
+                    <td>@item.Profit</td>
+                    <td>@item.Entry</td>
+                    <td>@item.Exit</td>
+                    <td>
+                        <input type="checkbox" disabled @(item.Locked ? "checked" : "") />
+                    </td>
+                    <td>
+                        @if (!item.Locked)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" data-toggle="tooltip" title="Edit trade" style="color: turquoise;"><i class="fas fa-pen"></i></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

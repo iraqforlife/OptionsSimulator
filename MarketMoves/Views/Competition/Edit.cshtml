@@ -1,0 +1,69 @@
+﻿@model MarketMoves.Models.Play
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Play</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Trade title</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Entry" class="control-label">Total Entry amount ($) * including commision</label>
+                <input asp-for="Entry" class="form-control" />
+                <span asp-validation-for="Entry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Exit" class="control-label">Total Exit amount ($) * including commision</label>
+                <input asp-for="Exit" class="form-control" />
+                <span asp-validation-for="Exit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Why" class="control-label">Why did you get in?</label>
+                <textarea asp-for="Why" class="form-control" rows="10" cols="150"></textarea>
+                <span asp-validation-for="Why" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Execution" class="control-label"></label>
+                <textarea asp-for="Execution" class="form-control" rows="10" cols="150"></textarea>
+                <span asp-validation-for="Execution" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Learning" class="control-label"></label>
+                <textarea asp-for="Learning" class="form-control" rows="10" cols="150"></textarea>
+                <span asp-validation-for="Learning" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Proof" class="control-label">Image url of proof of trade. *Order execution for example</label>
+                <input asp-for="Proof" class="form-control" />
+                <span asp-validation-for="Proof" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Locked" />Lock the trade? Once locked, you won't be able to edit it. Profit will be computed after.
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="MyTrades">Back to List</a>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

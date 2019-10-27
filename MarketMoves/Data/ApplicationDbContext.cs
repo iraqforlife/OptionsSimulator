@@ -15,6 +15,7 @@ namespace MarketMoves.Data
 
         }
         public DbSet<Alert> Alerts { get; set; }
-
+        public DbSet<Play> Plays { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }

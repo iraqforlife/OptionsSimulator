@@ -1,0 +1,31 @@
+﻿@model Account
+
+@{
+    ViewData["Title"] = "MyTrades";
+}
+
+<h1>@Model.Name Trades</h1>
+
+<div>
+    <table class="table data-table table-dark text-center table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Profit</th>
+                <th>Entry</th>
+                <th>Exit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Plays.Where(p=>p.Locked))
+            {
+                <tr>
+                    <td><a asp-action="Details" asp-route-id="@item.Id">@item.Title</a></td>
+                    <td>@item.Profit</td>
+                    <td>@item.Entry</td>
+                    <td>@item.Exit</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

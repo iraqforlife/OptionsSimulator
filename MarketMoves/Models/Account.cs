@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MarketMoves.Models
 {
@@ -28,11 +23,14 @@ namespace MarketMoves.Models
         public string Name { get; set; }
         public bool GetSmsNotification{ get; set; }
 
+        public double Balance { get; set; }
+        public List<Play> Plays { get; set; }
         public Account(string email, string name) : base(email)
         {            
             Email = email;
             Name = name;
             Suscribed = false;
+            Balance = 0;
             SuscriptionExpiration = DateTime.Now.AddDays(7);
         }
         public Account(string email, string name, string tradingview)

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<MarketMoves.Models.Account>
+
+@{
+    ViewData["Title"] = "View2";
+    int rank = 1;
+}
+
+<h1>Leader</h1>
+
+<p><a asp-action="MyTrades">My trades</a></p>
+<div class="table-responsive">
+    <table class="table data-table table-dark text-center table-bordered">
+        <thead >
+            <tr>
+                <th>Rank</th>
+                <th>User</th>
+                <th>Balance</th>
+                <th>Number of plays</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@rank</td>
+                    <td><a asp-action="UserTrades" asp-route-id="@item.Id">@item.Name</a></td>
+                    <td>@Html.DisplayFor(modelItem => item.Balance)</td>
+                    <td>@item.Plays.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

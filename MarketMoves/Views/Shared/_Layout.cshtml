@@ -25,6 +25,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Alerts" asp-action="Index">Alerts</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Competition" asp-action="Leader">Competition</a>
+                        </li>
                         @if (User.IsInRole(Roles.Admin))
                         {
                             <li class="nav-item">
