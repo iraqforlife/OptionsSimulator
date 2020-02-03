@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MarketMoves.Models;
 using MarketMoves.Areas.Identity;
 using MarketMoves.Util;
+using Stripe;
 namespace MarketMoves
 {
     public class Startup
@@ -46,7 +47,7 @@ namespace MarketMoves
             //dev
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<Account,IdentityRole>(options => { options.User.AllowedUserNameCharacters = String.Empty; options.User.RequireUniqueEmail = true; }).AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<Models.Account, IdentityRole>(options => { options.User.AllowedUserNameCharacters = String.Empty; options.User.RequireUniqueEmail = true; }).AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var google = Configuration.GetSection("Google");
@@ -64,6 +65,8 @@ namespace MarketMoves
                                 context.User.IsInRole(Roles.Admin)
                                 || context.User.IsInRole(Roles.PaidUser)));
             });
+
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,7 +108,7 @@ namespace MarketMoves
             {
                 var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
                 var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
-                var userManager = scope.ServiceProvider.GetService<UserManager<Account>>();
+                var userManager = scope.ServiceProvider.GetService<UserManager<Models.Account>>();
                 // Move this call out of the condition to automatically migrate development database.
                 dbContext.Database.Migrate();
 

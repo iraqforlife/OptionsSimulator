@@ -265,6 +265,27 @@ namespace MarketMoves.Controllers
                 return Json(false);
             }
         }
+        [AllowAnonymous]
+        public IActionResult SendSMSTo(string number, string message, string id, string password)
+        {
+            try
+            {
+                if (id != "ZoTheOptionSeller" && password != "HeIsTheBest777")
+                    return Json("I did not send the message; ID&PW are wrong");
+
+                if (string.IsNullOrEmpty(message) || string.IsNullOrEmpty(number))
+                    return Json("Missing parameters");
+
+                NotificationManager notif = new NotificationManager(_userManager);
+                notif.SendSMS(number, message);
+                return Json($"The Message ({message}) to {number} is sent");
+            }
+            catch
+            {
+                return Json("It failed because it crashed");
+            }
+        }
+
         #endregion
     }
 }

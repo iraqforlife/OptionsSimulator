@@ -27,7 +27,7 @@ namespace MarketMoves.Controllers
         // GET: Competition
         public ActionResult Leader()
         {
-            var users = Context.Accounts.Include(o => o.Plays).Where(p => p.Plays.Count > 0 && p.Plays.Any(q => q.Locked) && p.Balance>0);
+            var users = Context.Accounts.Include(o => o.Plays).Where(p => p.Plays.Count > 0 && p.Plays.Any(q => q.Locked) && p.Balance>0).OrderByDescending(a=>a.Balance);
 
             return View(users);
         }

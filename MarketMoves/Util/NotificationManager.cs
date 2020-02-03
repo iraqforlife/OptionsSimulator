@@ -10,6 +10,7 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.AspNetCore.Identity;
 using MarketMoves.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MarketMoves.Util
 {
@@ -44,6 +45,21 @@ namespace MarketMoves.Util
                 return true;
             }
             catch 
+            {
+                return false;
+            }
+        }
+        [AllowAnonymous]
+        public bool SendSMS(string number, string message)
+        {
+            PhoneNumber from = new PhoneNumber(_From);
+            PhoneNumber to = new PhoneNumber("+1" + number);
+            try
+            {
+                Task<MessageResource> outBoundMessage = MessageResource.CreateAsync(to: to, from: from, body: message);
+                return true;
+            }
+            catch
             {
                 return false;
             }
