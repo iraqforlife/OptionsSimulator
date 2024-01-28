@@ -16,11 +16,11 @@ namespace MarketMoves.Util
 {
     public class NotificationManager
     {
-        private const string _AccountSid = "ACd19fb1303b22ffdce2e3ac4d6d57ba58";
-        private const string _AuthToken = "b42722404049c6a14a4a44d850fc851f";
-        private const string _Email = "tradealert.notifications@gmail.com";
-        private const string _Password = "Zoisthebesttrader";
-        private const string _From = "+13158885657";
+        private const string _AccountSid = "";
+        private const string _AuthToken = "";
+        private const string _Email = "";
+        private const string _Password = "";
+        private const string _From = "";
         private readonly UserManager<Account> _userManager;
 
         public NotificationManager(UserManager<Account> userManager)
