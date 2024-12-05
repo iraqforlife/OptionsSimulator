@@ -35,6 +35,7 @@ namespace MarketMoves.Controllers
         public IActionResult Create()
         {
             return View();
+            ///terstr
         }
 
         // POST: Alerts1/Create
